@@ -28,6 +28,7 @@ public class MemberDAOImpl implements MemberDAO {
     
     public boolean updateById(int id, Member member){
         int index = indexOfId(id);
+        
         if (index == -1) {
             return false;
         }

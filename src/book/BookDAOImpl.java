@@ -28,6 +28,7 @@ public class BookDAOImpl implements BookDAO {
     
     public boolean updateById(int id, Book book){
         int index = indexOfId(id);
+        
         if (index == -1) {
             return false;
         }

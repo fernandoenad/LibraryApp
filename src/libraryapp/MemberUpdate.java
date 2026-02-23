@@ -4,27 +4,44 @@
  */
 package libraryapp;
 
-import book.*;
+import member.*;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author fernandoenad
  */
-public class BookNew extends javax.swing.JDialog {
-    private Book book = null;
+public class MemberUpdate extends javax.swing.JDialog {
+    private Member member = null;
     private Boolean confirmed = false;
     
     /**
      * Creates new form BookNew
      */
-    public BookNew(java.awt.Frame parent, boolean modal) {
+    public MemberUpdate(java.awt.Frame parent, boolean modal, Member member) {
         super(parent, modal);
         initComponents();
+        this.member = member;
+        loadMember();
     }
 
-    public Book getBook(){
-        return this.book;
+    public void loadMember(){
+        tfId.setText(String.format("%s", this.member.getId()));
+        tfName.setText(String.format("%s", this.member.getName()));
+        tfEmail.setText(String.format("%s", this.member.getEmail()));
+        tfContactNumber.setText(String.format("%s", this.member.getContactNumber()));
+        tfAddress.setText(String.format("%s", this.member.getAddress()));
+        tfDateJoined.setText(String.format("%s", this.member.getDateJoined()));
+        
+        if(this.member.getStatus() == 1){
+            rbtnActive.setSelected(true);
+        } else {
+            rbtnInactive.setSelected(true);
+        }
+    }
+    
+    public Member getMember(){
+        return this.member;
     }
     
     public Boolean getConfirm(){
@@ -39,39 +56,41 @@ public class BookNew extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btngStatus = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        tfIsbn = new javax.swing.JTextField();
-        tfTitle = new javax.swing.JTextField();
-        tfAuthor = new javax.swing.JTextField();
-        tfPublisher = new javax.swing.JTextField();
-        tfYearPublished = new javax.swing.JTextField();
-        tfCategory = new javax.swing.JTextField();
+        tfName = new javax.swing.JTextField();
+        tfEmail = new javax.swing.JTextField();
+        tfContactNumber = new javax.swing.JTextField();
+        tfAddress = new javax.swing.JTextField();
+        tfDateJoined = new javax.swing.JTextField();
         btnReset = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         btnClose = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        tfId = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        rbtnActive = new javax.swing.JRadioButton();
+        rbtnInactive = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Library Management System - New Book");
+        setTitle("Library Management System - New Member");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Fill in book details..."));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Update member details..."));
 
-        jLabel1.setText("ISBN:");
+        jLabel1.setText("Name:");
 
-        jLabel2.setText("Title:");
+        jLabel2.setText("Email");
 
-        jLabel3.setText("Author:");
+        jLabel3.setText("Contact Number:");
 
-        jLabel4.setText("Publisher:");
+        jLabel4.setText("Address:");
 
-        jLabel5.setText("Year Published:");
-
-        jLabel6.setText("Category:");
+        jLabel5.setText("Date Joined:");
 
         btnReset.setText("Reset");
         btnReset.addActionListener(new java.awt.event.ActionListener() {
@@ -94,6 +113,18 @@ public class BookNew extends javax.swing.JDialog {
             }
         });
 
+        jLabel6.setText("ID:");
+
+        tfId.setEditable(false);
+
+        jLabel7.setText("Status:");
+
+        btngStatus.add(rbtnActive);
+        rbtnActive.setText("Active");
+
+        btngStatus.add(rbtnInactive);
+        rbtnInactive.setText("Inactive");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -101,57 +132,70 @@ public class BookNew extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(tfIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfPublisher, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfYearPublished, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(btnSave)
+                        .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnReset)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnClose)))
-                .addContainerGap(19, Short.MAX_VALUE))
+                        .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnSave)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnReset)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnClose))
+                            .addComponent(tfName, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfContactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfDateJoined, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(rbtnActive)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rbtnInactive)))))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
+                .addGap(5, 5, 5)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(tfIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(tfTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(tfAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfContactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(tfPublisher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(tfYearPublished, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfDateJoined, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(tfCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
+                    .addComponent(jLabel7)
+                    .addComponent(rbtnActive)
+                    .addComponent(rbtnInactive))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave)
                     .addComponent(btnReset)
@@ -176,12 +220,11 @@ public class BookNew extends javax.swing.JDialog {
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
         // TODO add your handling code here:
-        tfIsbn.setText("");
-        tfTitle.setText("");
-        tfAuthor.setText("");
-        tfPublisher.setText("");
-        tfYearPublished.setText("");
-        tfCategory.setText("");
+        tfName.setText("");
+        tfEmail.setText("");
+        tfContactNumber.setText("");
+        tfAddress.setText("");
+        tfDateJoined.setText("");
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -193,37 +236,38 @@ public class BookNew extends javax.swing.JDialog {
         }
         
         InputValidator inputValidator = new InputValidator();
-        String isbn = tfIsbn.getText();
-        String title = tfTitle.getText();
-        String author = tfAuthor.getText();
-        String publisher = tfPublisher.getText();
-        String yearPublished = tfYearPublished.getText();
-        String category = tfCategory.getText();
+        String name = tfName.getText();
+        String email = tfEmail.getText();
+        String contactNumber = tfContactNumber.getText();
+        String address = tfAddress.getText();
+        String dateJoined = tfDateJoined.getText();
+        int status = 0;
+        
+        if(rbtnActive.isSelected()){
+            status = 1;
+        }
+        
         String errorMsg = "";
         
-        if(!inputValidator.validateInteger(isbn)){
-            errorMsg += "- Invalid ISBN (Numbers only).\n";
+        if(!inputValidator.validateString(name, 3)){
+            errorMsg += "- Name must be at least 3 characters long.\n";
         }  
         
-        if(!inputValidator.validateString(title, 3)){
-            errorMsg += "- Title must be at least 3 characters long.\n";
-        }  
-        
-        if(!inputValidator.validateString(author, 3)){
-            errorMsg += "- Author name is too short.\n";
+        if(!inputValidator.validateEmail(email)){
+            errorMsg += "- Please enter a valid email address.\n";
         } 
         
-        if(!inputValidator.validateString(publisher, 3)){
-            errorMsg += "- Publisher name is too short.\n";
-        }  
+        if(!inputValidator.validatePhoneNumber(contactNumber)){
+            errorMsg += "- Please enter a valid phone number (digits only).\n";
+        } 
         
-        if(!inputValidator.validateYear(yearPublished)){
-            errorMsg += "- Year Published must be a valid year format (YYYY).\n";
-        }  
+        if(!inputValidator.validateString(address, 3)){
+            errorMsg += "- Address must be at least 3 characters long.\n";
+        } 
         
-        if(!inputValidator.validateString(category, 3)){
-            errorMsg += "- Category must be at least 3 characters long.\n";
-        }
+        if(!inputValidator.validateDate(dateJoined)){
+            errorMsg += "- Date must be in YYYY-MM-DD format (e.g., 2024-12-31).\n";
+        } 
         
         if (errorMsg.length() > 0) {
             JOptionPane.showMessageDialog(this, "Please correct the following errors:\n" + errorMsg.toString(), "Validation Error", JOptionPane.ERROR_MESSAGE);
@@ -231,7 +275,7 @@ public class BookNew extends javax.swing.JDialog {
         }
         
         try {
-            this.book = new Book(0, Integer.parseInt(isbn), title, author, publisher, Integer.parseInt(yearPublished), category, 1);
+            this.member = new Member(0, name, email, contactNumber, address, dateJoined, status);
             this.confirmed = true;
             this.dispose();
         } catch (Exception e) {
@@ -262,20 +306,23 @@ public class BookNew extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BookNew.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MemberUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BookNew.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MemberUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BookNew.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MemberUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BookNew.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MemberUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                BookNew dialog = new BookNew(new javax.swing.JFrame(), true);
+                MemberUpdate dialog = new MemberUpdate(new javax.swing.JFrame(), true, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -291,18 +338,22 @@ public class BookNew extends javax.swing.JDialog {
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnSave;
+    private javax.swing.ButtonGroup btngStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField tfAuthor;
-    private javax.swing.JTextField tfCategory;
-    private javax.swing.JTextField tfIsbn;
-    private javax.swing.JTextField tfPublisher;
-    private javax.swing.JTextField tfTitle;
-    private javax.swing.JTextField tfYearPublished;
+    private javax.swing.JRadioButton rbtnActive;
+    private javax.swing.JRadioButton rbtnInactive;
+    private javax.swing.JTextField tfAddress;
+    private javax.swing.JTextField tfContactNumber;
+    private javax.swing.JTextField tfDateJoined;
+    private javax.swing.JTextField tfEmail;
+    private javax.swing.JTextField tfId;
+    private javax.swing.JTextField tfName;
     // End of variables declaration//GEN-END:variables
 }

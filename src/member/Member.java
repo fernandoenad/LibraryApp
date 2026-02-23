@@ -18,7 +18,7 @@ public class Member implements Serializable {
     private String contactNumber;
     private String address;
     private String dateJoined;
-    private int status; // 0-archived, 1-available
+    private int status; // 0-inactive, 1-active
 
     public Member(int id, String name, String email, String contactNumber, String address, String dateJoined, int status) {
         this.id = id;
@@ -89,9 +89,9 @@ public class Member implements Serializable {
     public String getStatusRemarks() {
         String status = "";  
         if(this.status == 0)        
-            status = "Archived";
+            status = "Inactive";
         else 
-            status = "Available";
+            status = "Active";
         
         return status;
     }

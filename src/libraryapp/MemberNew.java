@@ -208,9 +208,6 @@ public class MemberNew extends javax.swing.JDialog {
             errorMsg += "- Date must be in YYYY-MM-DD format (e.g., 2024-12-31).\n";
         } 
         
-        
-        
-        
         if (errorMsg.length() > 0) {
             JOptionPane.showMessageDialog(this, "Please correct the following errors:\n" + errorMsg.toString(), "Validation Error", JOptionPane.ERROR_MESSAGE);
             return; 

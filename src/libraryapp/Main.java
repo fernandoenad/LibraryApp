@@ -61,6 +61,10 @@ public class Main extends javax.swing.JFrame {
         booksPopupMenu = new javax.swing.JPopupMenu();
         booksPopupMenuEdit = new javax.swing.JMenuItem();
         booksPopupMenuDelete = new javax.swing.JMenuItem();
+        membersPopupMenu = new javax.swing.JPopupMenu();
+        membersPopupMenuEdit = new javax.swing.JMenuItem();
+        membersPopupMenuDelete = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         tabHome = new javax.swing.JPanel();
         tabTransactions = new javax.swing.JPanel();
@@ -109,6 +113,24 @@ public class Main extends javax.swing.JFrame {
             }
         });
         booksPopupMenu.add(booksPopupMenuDelete);
+
+        membersPopupMenuEdit.setText("Edit");
+        membersPopupMenuEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                membersPopupMenuEditActionPerformed(evt);
+            }
+        });
+        membersPopupMenu.add(membersPopupMenuEdit);
+
+        membersPopupMenuDelete.setText("Delete");
+        membersPopupMenuDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                membersPopupMenuDeleteActionPerformed(evt);
+            }
+        });
+        membersPopupMenu.add(membersPopupMenuDelete);
+
+        jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Library Management System");
@@ -324,6 +346,11 @@ public class Main extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        membersTblMembers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                membersTblMembersMouseClicked(evt);
             }
         });
         jScrollPane5.setViewportView(membersTblMembers);
@@ -566,7 +593,6 @@ public class Main extends javax.swing.JFrame {
         } catch (Exception e){
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage() + "!", "System Error!", JOptionPane.WARNING_MESSAGE);
         }
-        
     }//GEN-LAST:event_booksPopupMenuDeleteActionPerformed
 
     private void booksPopupMenuEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_booksPopupMenuEditActionPerformed
@@ -629,6 +655,70 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_membersTfSearchCaretUpdate
 
+    private void membersPopupMenuEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_membersPopupMenuEditActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) membersTblMembers.getModel();
+        int row = membersTblMembers.getSelectedRow();
+        int col = 0;
+        int id = Integer.parseInt(model.getValueAt(row, col).toString());
+        
+        Member mo = memberDAOImpl.viewById(id);
+        
+        MemberUpdate memberUpdate = new MemberUpdate(this, true, mo);
+        memberUpdate.setVisible(true);
+        
+        if(!memberUpdate.getConfirm()){
+            return;
+        }
+        
+        try{
+            Member mu = memberUpdate.getMember();
+            
+            memberDAOImpl.updateById(id, mu);
+            loadMembers();
+            JOptionPane.showMessageDialog(null, "Record was updated!", "System Information!", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage() + "!", "System Error!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_membersPopupMenuEditActionPerformed
+
+    private void membersPopupMenuDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_membersPopupMenuDeleteActionPerformed
+        // TODO add your handling code here:
+        int option = JOptionPane.showConfirmDialog(null, "Are you sure?", "System Confirmation!", JOptionPane.OK_CANCEL_OPTION);
+        
+        if(option != JOptionPane.OK_OPTION){
+            return;
+        }
+
+        try{   
+            DefaultTableModel model = (DefaultTableModel) membersTblMembers.getModel();
+            int row = membersTblMembers.getSelectedRow();
+            int col = 0;
+            int id = Integer.parseInt(model.getValueAt(row, col).toString());
+            
+            memberDAOImpl.deleteById(id);
+            loadMembers();
+            JOptionPane.showMessageDialog(null, "Record was deleted!", "System Information!", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage() + "!", "System Error!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_membersPopupMenuDeleteActionPerformed
+
+    private void membersTblMembersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_membersTblMembersMouseClicked
+        // TODO add your handling code here:
+        Point p = membersTblMembers.getMousePosition();
+
+        if (p != null) {
+            membersPopupMenu.show(membersTblMembers, p.x, p.y);
+        } else {
+            int row = membersTblMembers.getSelectedRow();
+            if(row != -1) {
+                Rectangle rect = membersTblMembers.getCellRect(row, 0, true);
+                membersPopupMenu.show(membersTblMembers, rect.x, rect.y);
+            }
+        }
+    }//GEN-LAST:event_membersTblMembersMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -675,6 +765,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -685,6 +776,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton membersBtnNew;
+    private javax.swing.JPopupMenu membersPopupMenu;
+    private javax.swing.JMenuItem membersPopupMenuDelete;
+    private javax.swing.JMenuItem membersPopupMenuEdit;
     private javax.swing.JTable membersTblMembers;
     private javax.swing.JTextField membersTfSearch;
     private javax.swing.JPanel tabBooks;

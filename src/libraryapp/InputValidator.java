@@ -61,4 +61,14 @@ public class InputValidator {
         
         return str.matches(emailRegex);
     }
+    
+    public boolean validateYear(String str) {
+        try {
+            int year = Integer.parseInt(str);
+            int currentYear = java.time.Year.now().getValue();
+            return (year >= 1800 && year <= currentYear);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }

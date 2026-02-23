@@ -33,6 +33,12 @@ public class BookUpdate extends javax.swing.JDialog {
         tfPublisher.setText(String.format("%s", this.book.getPublisher()));
         tfYearPublished.setText(String.format("%s", this.book.getYearPublished()));
         tfCategory.setText(String.format("%s", this.book.getCategory()));
+        
+        if(this.book.getStatus() == 1){
+            rbtnAvailable.setSelected(true);
+        } else {
+            rbtnArchived.setSelected(true);
+        }
     }
     
     public Book getBook(){
@@ -51,6 +57,7 @@ public class BookUpdate extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btngStatus = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -69,6 +76,9 @@ public class BookUpdate extends javax.swing.JDialog {
         btnClose = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         tfId = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        rbtnAvailable = new javax.swing.JRadioButton();
+        rbtnArchived = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Library Management System - Update Book");
@@ -110,7 +120,15 @@ public class BookUpdate extends javax.swing.JDialog {
 
         jLabel7.setText("ID");
 
-        tfId.setEnabled(false);
+        tfId.setEditable(false);
+
+        jLabel8.setText("Status:");
+
+        btngStatus.add(rbtnAvailable);
+        rbtnAvailable.setText("Available");
+
+        btngStatus.add(rbtnArchived);
+        rbtnArchived.setText("Archived");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -132,20 +150,28 @@ public class BookUpdate extends javax.swing.JDialog {
                             .addComponent(jLabel2)
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tfIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfPublisher, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfYearPublished, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnSave)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnReset)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnClose)))))
+                                .addGap(54, 54, 54)
+                                .addComponent(btnClose))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(rbtnAvailable)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rbtnArchived)))))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -155,7 +181,7 @@ public class BookUpdate extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(tfIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -179,12 +205,17 @@ public class BookUpdate extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(tfCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(rbtnAvailable)
+                    .addComponent(rbtnArchived))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave)
                     .addComponent(btnReset)
                     .addComponent(btnClose))
-                .addGap(30, 30, 30))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -223,6 +254,12 @@ public class BookUpdate extends javax.swing.JDialog {
         String publisher = tfPublisher.getText();
         String yearPublished = tfYearPublished.getText();
         String category = tfCategory.getText();
+        int status = 0;
+        
+        if(rbtnAvailable.isSelected()){
+            status = 1;
+        }
+        
         String errorMsg = "";
         
         if(!inputValidator.validateInteger(isbn)){
@@ -241,9 +278,9 @@ public class BookUpdate extends javax.swing.JDialog {
             errorMsg += "- Publisher name is too short.\n";
         }  
         
-        if(!inputValidator.validateInteger(yearPublished)){
-            errorMsg += "- Year Published must be a valid number.\n";
-        }  
+        if(!inputValidator.validateYear(yearPublished)){
+            errorMsg += "- Year Published must be a valid year format (YYYY).\n";
+        }   
         
         if(!inputValidator.validateString(category, 3)){
             errorMsg += "- Category must be at least 3 characters long.\n";
@@ -255,7 +292,7 @@ public class BookUpdate extends javax.swing.JDialog {
         }
         
         try {
-            this.book = new Book(Integer.parseInt(id), Integer.parseInt(isbn), title, author, publisher, Integer.parseInt(yearPublished), category, 1);
+            this.book = new Book(Integer.parseInt(id), Integer.parseInt(isbn), title, author, publisher, Integer.parseInt(yearPublished), category, status);
             this.confirmed = true;
             this.dispose();
         } catch (Exception e) {
@@ -316,6 +353,7 @@ public class BookUpdate extends javax.swing.JDialog {
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnSave;
+    private javax.swing.ButtonGroup btngStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -323,7 +361,10 @@ public class BookUpdate extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JRadioButton rbtnArchived;
+    private javax.swing.JRadioButton rbtnAvailable;
     private javax.swing.JTextField tfAuthor;
     private javax.swing.JTextField tfCategory;
     private javax.swing.JTextField tfId;
