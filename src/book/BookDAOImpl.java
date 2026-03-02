@@ -82,15 +82,16 @@ public class BookDAOImpl implements BookDAO {
         return -1;
     }
     
-    public List<Book> search(String keyword){
-        String lowerKeyword = keyword.toLowerCase();
+    public List<Book> search(String str){
+        String lowerStr = str.toLowerCase();
 
         return books.stream()
             .filter(book ->
-                String.valueOf(book.getId()).contains(lowerKeyword) ||
-                book.getTitle().toLowerCase().contains(lowerKeyword) ||
-                book.getAuthor().toLowerCase().contains(lowerKeyword) ||
-                book.getCategory().toLowerCase().contains(lowerKeyword)
+                String.valueOf(book.getId()).contains(lowerStr) ||
+                String.valueOf(book.getIsbn()).contains(lowerStr) ||
+                book.getTitle().toLowerCase().contains(lowerStr) ||
+                book.getAuthor().toLowerCase().contains(lowerStr) ||
+                book.getCategory().toLowerCase().contains(lowerStr)
             )
             .toList();
     }
@@ -123,5 +124,11 @@ public class BookDAOImpl implements BookDAO {
         }
         
         return this.books.get(this.books.size() - 1);
+    }
+    
+    public List<Book> viewAllSorted() {
+        this.books.sort(Comparator.comparing(Book::getTitle));
+        
+        return this.books;
     }
 }

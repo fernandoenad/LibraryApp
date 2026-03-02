@@ -34,7 +34,7 @@ public class InputValidator {
     }
     
     public Boolean validateString(String str, int size){
-        if (str.length() == 0 || str.length() <= size) {
+        if (str.length() == 0 || str.length() < size) {
             return false;
         }
 

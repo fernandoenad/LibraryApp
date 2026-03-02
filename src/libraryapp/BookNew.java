@@ -59,7 +59,7 @@ public class BookNew extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Library Management System - New Book");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Fill in book details..."));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Fill out book details..."));
 
         jLabel1.setText("ISBN:");
 

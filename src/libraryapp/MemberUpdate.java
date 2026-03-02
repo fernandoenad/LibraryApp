@@ -84,7 +84,7 @@ public class MemberUpdate extends javax.swing.JDialog {
 
         jLabel1.setText("Name:");
 
-        jLabel2.setText("Email");
+        jLabel2.setText("Email:");
 
         jLabel3.setText("Contact Number:");
 
@@ -99,7 +99,7 @@ public class MemberUpdate extends javax.swing.JDialog {
             }
         });
 
-        btnSave.setText("Save");
+        btnSave.setText("Update");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveActionPerformed(evt);

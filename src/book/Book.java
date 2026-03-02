@@ -99,11 +99,18 @@ public class Book implements Serializable{
     
     public String getStatusRemarks() {
         String status = "";  
-        if(this.status == 0)        
+        
+        if(this.status == 0) {       
             status = "Archived";
-        else 
+        } else {
             status = "Available";
+        }
         
         return status;
+    }
+    
+    @Override
+    public String toString() {
+        return this.title;
     }
 }

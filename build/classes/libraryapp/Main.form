@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Container class="javax.swing.JPopupMenu" name="booksPopupMenu">
       <Properties>
@@ -55,11 +55,22 @@
         </MenuItem>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JMenuItem" name="jMenuItem1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jMenuItem1"/>
-      </Properties>
-    </Component>
+    <Container class="javax.swing.JPopupMenu" name="usersPopupMenu">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="true"/>
+      </Layout>
+      <SubComponents>
+        <MenuItem class="javax.swing.JMenuItem" name="usersPopupMenuEdit">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Edit"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="usersPopupMenuEditActionPerformed"/>
+          </Events>
+        </MenuItem>
+      </SubComponents>
+    </Container>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -174,7 +185,7 @@
                                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="transactionsTfSearch" min="-2" pref="495" max="-2" attributes="0"/>
-                                  <EmptySpace pref="364" max="32767" attributes="0"/>
+                                  <EmptySpace pref="327" max="32767" attributes="0"/>
                                   <Component id="transactionsBtnNew" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -209,14 +220,12 @@
                     <Component class="javax.swing.JTable" name="transactionsTblTransactions">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="8" rowCount="0">
+                          <Table columnCount="6" rowCount="0">
                             <Column editable="false" title="ID" type="java.lang.Object"/>
-                            <Column editable="false" title="ISBN" type="java.lang.Object"/>
+                            <Column editable="false" title="Borrower" type="java.lang.Object"/>
                             <Column editable="false" title="Title" type="java.lang.Object"/>
-                            <Column editable="false" title="Author" type="java.lang.Object"/>
-                            <Column editable="false" title="Publisher" type="java.lang.Object"/>
-                            <Column editable="false" title="Year Published" type="java.lang.Object"/>
-                            <Column editable="false" title="Category" type="java.lang.Object"/>
+                            <Column editable="false" title="Borrow Date" type="java.lang.Object"/>
+                            <Column editable="false" title="Due Date" type="java.lang.Object"/>
                             <Column editable="false" title="Status" type="java.lang.Object"/>
                           </Table>
                         </Property>
@@ -252,16 +261,6 @@
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                              <Title value="Status"/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
                           </TableColumnModel>
                         </Property>
                         <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
@@ -280,8 +279,11 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="transactionsBtnNew">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="New Book"/>
+                    <Property name="text" type="java.lang.String" value="New Transaction"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="transactionsBtnNewActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -425,7 +427,7 @@
                               <Renderer/>
                             </Column>
                             <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                              <Title value="Status"/>
+                              <Title/>
                               <Editor/>
                               <Renderer/>
                             </Column>
@@ -687,7 +689,7 @@
                                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="usersTfSearch" min="-2" pref="495" max="-2" attributes="0"/>
-                                  <EmptySpace pref="364" max="32767" attributes="0"/>
+                                  <EmptySpace pref="367" max="32767" attributes="0"/>
                                   <Component id="usersBtnNew" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -722,14 +724,12 @@
                     <Component class="javax.swing.JTable" name="usersTblUsers">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="8" rowCount="0">
+                          <Table columnCount="6" rowCount="0">
                             <Column editable="false" title="ID" type="java.lang.Object"/>
-                            <Column editable="false" title="ISBN" type="java.lang.Object"/>
-                            <Column editable="false" title="Title" type="java.lang.Object"/>
-                            <Column editable="false" title="Author" type="java.lang.Object"/>
-                            <Column editable="false" title="Publisher" type="java.lang.Object"/>
-                            <Column editable="false" title="Year Published" type="java.lang.Object"/>
-                            <Column editable="false" title="Category" type="java.lang.Object"/>
+                            <Column editable="false" title="User" type="java.lang.Object"/>
+                            <Column editable="false" title="Username" type="java.lang.Object"/>
+                            <Column editable="false" title="Password" type="java.lang.Object"/>
+                            <Column editable="false" title="Role" type="java.lang.Object"/>
                             <Column editable="false" title="Status" type="java.lang.Object"/>
                           </Table>
                         </Property>
@@ -765,26 +765,22 @@
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                              <Title value="Status"/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
                           </TableColumnModel>
                         </Property>
                         <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                           <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="usersTblUsersMouseClicked"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
                 <Component class="javax.swing.JTextField" name="usersTfSearch">
+                  <Events>
+                    <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="usersTfSearchCaretUpdate"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel6">
                   <Properties>
@@ -793,8 +789,11 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="usersBtnNew">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="New Book"/>
+                    <Property name="text" type="java.lang.String" value="New User"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="usersBtnNewActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

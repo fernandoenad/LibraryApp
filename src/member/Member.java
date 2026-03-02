@@ -88,11 +88,17 @@ public class Member implements Serializable {
     
     public String getStatusRemarks() {
         String status = "";  
+        
         if(this.status == 0)        
             status = "Inactive";
         else 
             status = "Active";
         
         return status;
+    }
+    
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

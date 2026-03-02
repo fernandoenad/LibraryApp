@@ -57,11 +57,11 @@ public class MemberNew extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Library Management System - New Member");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Fill in member details..."));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Fill out member details..."));
 
         jLabel1.setText("Name:");
 
-        jLabel2.setText("Email");
+        jLabel2.setText("Email:");
 
         jLabel3.setText("Contact Number:");
 
@@ -253,6 +253,12 @@ public class MemberNew extends javax.swing.JDialog {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MemberNew.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 

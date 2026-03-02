@@ -65,7 +65,6 @@ public class MemberDAOImpl implements MemberDAO {
         }
         
         return this.members.get(index);
-        
     }
     
     public List<Member> viewAll(){
@@ -73,11 +72,12 @@ public class MemberDAOImpl implements MemberDAO {
     }
     
     public int indexOfId(int id){
-    for (int i = 0; i < this.members.size(); i++) {
+        for (int i = 0; i < this.members.size(); i++) {
             if (this.members.get(i).getId()== id) {
                 return i;
             }
         }
+        
         return -1;
     }
     
@@ -122,5 +122,11 @@ public class MemberDAOImpl implements MemberDAO {
         }
         
         return this.members.get(this.members.size() - 1);
+    }
+    
+    public List<Member> viewAllSorted() {
+        this.members.sort(Comparator.comparing(Member::getName));
+        
+        return this.members;
     }
 }

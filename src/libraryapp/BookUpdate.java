@@ -118,7 +118,7 @@ public class BookUpdate extends javax.swing.JDialog {
             }
         });
 
-        jLabel7.setText("ID");
+        jLabel7.setText("ID:");
 
         tfId.setEditable(false);
 

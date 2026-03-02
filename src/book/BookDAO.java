@@ -17,5 +17,5 @@ public interface BookDAO {
     public  Book viewById(int id);
     public List<Book> viewAll();
     public  int indexOfId(int id);
-    public List<Book> search(String keyword);
+    public List<Book> search(String str);
 }

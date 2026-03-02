@@ -7,9 +7,11 @@ package libraryapp;
 import javax.swing.JOptionPane;
 import book.*;
 import member.*;
-import java.awt.Point;
-import java.awt.Rectangle;
+import transaction.*;
+import user.*;
+import java.awt.*;
 import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author fernandoenad
@@ -17,6 +19,9 @@ import javax.swing.table.DefaultTableModel;
 public class Main extends javax.swing.JFrame {
     BookDAOImpl bookDAOImpl = new BookDAOImpl("books.txt");
     MemberDAOImpl memberDAOImpl = new MemberDAOImpl("members.txt");
+    UserDAOImpl userDAOImpl = new UserDAOImpl("users.txt");
+    TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl("transactions.txt");
+
     /**
      * Creates new form Main
      */
@@ -28,6 +33,7 @@ public class Main extends javax.swing.JFrame {
     public void loadTables(){
         loadBooks();
         loadMembers();
+        loadUsers();
     }
     
     public void loadBooks(){
@@ -49,6 +55,26 @@ public class Main extends javax.swing.JFrame {
         }
         
     }
+    
+    public void loadTransactions(){
+        DefaultTableModel model = (DefaultTableModel) transactionsTblTransactions.getModel();
+        model.setRowCount(0);
+        
+        for(Transaction t : transactionDAOImpl.viewAll()){
+            model.addRow(new Object[]{t.getId(), memberDAOImpl.viewById(t.getMember_id()).getName(), bookDAOImpl.viewById(t.getBook_id()).getTitle(), t.getDateBorrowed(), t.getDateDue(), t.getStatusRemarks()});
+        }
+        
+    }
+    
+    public void loadUsers(){
+        DefaultTableModel model = (DefaultTableModel) usersTblUsers.getModel();
+        model.setRowCount(0);
+        
+        for(User u : userDAOImpl.viewAll()){
+            model.addRow(new Object[]{u.getId(), memberDAOImpl.viewById(u.getMemberId()).getName(), u.getUsername(), "***", u.getRoleLabel(), u.getStatusRemarks()});
+        }
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -64,7 +90,8 @@ public class Main extends javax.swing.JFrame {
         membersPopupMenu = new javax.swing.JPopupMenu();
         membersPopupMenuEdit = new javax.swing.JMenuItem();
         membersPopupMenuDelete = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        usersPopupMenu = new javax.swing.JPopupMenu();
+        usersPopupMenuEdit = new javax.swing.JMenuItem();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         tabHome = new javax.swing.JPanel();
         tabTransactions = new javax.swing.JPanel();
@@ -130,7 +157,13 @@ public class Main extends javax.swing.JFrame {
         });
         membersPopupMenu.add(membersPopupMenuDelete);
 
-        jMenuItem1.setText("jMenuItem1");
+        usersPopupMenuEdit.setText("Edit");
+        usersPopupMenuEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usersPopupMenuEditActionPerformed(evt);
+            }
+        });
+        usersPopupMenu.add(usersPopupMenuEdit);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Library Management System");
@@ -155,11 +188,11 @@ public class Main extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "ISBN", "Title", "Author", "Publisher", "Year Published", "Category", "Status"
+                "ID", "Borrower", "Title", "Borrow Date", "Due Date", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -174,14 +207,16 @@ public class Main extends javax.swing.JFrame {
             transactionsTblTransactions.getColumnModel().getColumn(3).setResizable(false);
             transactionsTblTransactions.getColumnModel().getColumn(4).setResizable(false);
             transactionsTblTransactions.getColumnModel().getColumn(5).setResizable(false);
-            transactionsTblTransactions.getColumnModel().getColumn(6).setResizable(false);
-            transactionsTblTransactions.getColumnModel().getColumn(7).setResizable(false);
-            transactionsTblTransactions.getColumnModel().getColumn(7).setHeaderValue("Status");
         }
 
         jLabel1.setText("Search...");
 
-        transactionsBtnNew.setText("New Book");
+        transactionsBtnNew.setText("New Transaction");
+        transactionsBtnNew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                transactionsBtnNewActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -195,7 +230,7 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(transactionsTfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 364, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 327, Short.MAX_VALUE)
                         .addComponent(transactionsBtnNew)))
                 .addContainerGap())
         );
@@ -264,7 +299,6 @@ public class Main extends javax.swing.JFrame {
             booksTblBooks.getColumnModel().getColumn(5).setResizable(false);
             booksTblBooks.getColumnModel().getColumn(6).setResizable(false);
             booksTblBooks.getColumnModel().getColumn(7).setResizable(false);
-            booksTblBooks.getColumnModel().getColumn(7).setHeaderValue("Status");
         }
 
         booksTfSearch.addCaretListener(new javax.swing.event.CaretListener() {
@@ -434,15 +468,20 @@ public class Main extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "ISBN", "Title", "Author", "Publisher", "Year Published", "Category", "Status"
+                "ID", "User", "Username", "Password", "Role", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        usersTblUsers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                usersTblUsersMouseClicked(evt);
             }
         });
         jScrollPane6.setViewportView(usersTblUsers);
@@ -453,14 +492,22 @@ public class Main extends javax.swing.JFrame {
             usersTblUsers.getColumnModel().getColumn(3).setResizable(false);
             usersTblUsers.getColumnModel().getColumn(4).setResizable(false);
             usersTblUsers.getColumnModel().getColumn(5).setResizable(false);
-            usersTblUsers.getColumnModel().getColumn(6).setResizable(false);
-            usersTblUsers.getColumnModel().getColumn(7).setResizable(false);
-            usersTblUsers.getColumnModel().getColumn(7).setHeaderValue("Status");
         }
+
+        usersTfSearch.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                usersTfSearchCaretUpdate(evt);
+            }
+        });
 
         jLabel6.setText("Search...");
 
-        usersBtnNew.setText("New Book");
+        usersBtnNew.setText("New User");
+        usersBtnNew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usersBtnNewActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -474,7 +521,7 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(usersTfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 364, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 367, Short.MAX_VALUE)
                         .addComponent(usersBtnNew)))
                 .addContainerGap())
         );
@@ -719,6 +766,107 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_membersTblMembersMouseClicked
 
+    private void usersBtnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usersBtnNewActionPerformed
+        // TODO add your handling code here:
+        UserNew userNew = new UserNew(this, true, this.memberDAOImpl);
+        userNew.setVisible(true);
+                
+        if(!userNew.getConfirm()){
+            return;
+        }
+        
+        try{
+            User u = userNew.getUser();
+            int id = userDAOImpl.getLastRecord() == null ? 1 : userDAOImpl.getLastRecord().getId() + 1;
+            u.setId(id);
+            
+            userDAOImpl.add(u);
+            loadUsers();
+            JOptionPane.showMessageDialog(null, "Record was saved!", "System Information!", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage() + "!", "System Error!", JOptionPane.WARNING_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_usersBtnNewActionPerformed
+
+    private void usersTfSearchCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_usersTfSearchCaretUpdate
+        // TODO add your handling code here:
+        String str = usersTfSearch.getText();
+        DefaultTableModel model = (DefaultTableModel) usersTblUsers.getModel();
+        model.setRowCount(0);
+        
+        for(User u : userDAOImpl.search(str)){
+            model.addRow(new Object[]{u.getId(), memberDAOImpl.viewById(u.getMemberId()).getName(), u.getUsername(), "***", u.getRoleLabel(), u.getStatusRemarks()});
+        }
+    }//GEN-LAST:event_usersTfSearchCaretUpdate
+
+    private void usersTblUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usersTblUsersMouseClicked
+        // TODO add your handling code here:
+        Point p = usersTblUsers.getMousePosition();
+
+        if (p != null) {
+            usersPopupMenu.show(usersTblUsers, p.x, p.y);
+        } else {
+            int row = usersTblUsers.getSelectedRow();
+            if(row != -1) {
+                Rectangle rect = usersTblUsers.getCellRect(row, 0, true);
+                usersPopupMenu.show(usersTblUsers, rect.x, rect.y);
+            }
+        }
+    }//GEN-LAST:event_usersTblUsersMouseClicked
+
+    private void usersPopupMenuEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usersPopupMenuEditActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) usersTblUsers.getModel();
+        int row = usersTblUsers.getSelectedRow();
+        int col = 0;
+        int id = Integer.parseInt(model.getValueAt(row, col).toString());
+        
+        User uo = userDAOImpl.viewById(id);
+        
+        UserUpdate userUpdate = new UserUpdate(this, true, uo, this.memberDAOImpl);
+        userUpdate.setVisible(true);
+        
+        /*
+        if(!memberUpdate.getConfirm()){
+            return;
+        }
+        
+        
+        try{
+            Member mu = memberUpdate.getMember();
+            
+            memberDAOImpl.updateById(id, mu);
+            loadMembers();
+            JOptionPane.showMessageDialog(null, "Record was updated!", "System Information!", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage() + "!", "System Error!", JOptionPane.WARNING_MESSAGE);
+        }
+        */
+    }//GEN-LAST:event_usersPopupMenuEditActionPerformed
+
+    private void transactionsBtnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transactionsBtnNewActionPerformed
+        // TODO add your handling code here:
+        TransactionNew transactionNew = new TransactionNew(this, true, memberDAOImpl.viewAllSorted(), bookDAOImpl.viewAllSorted());
+        transactionNew.setVisible(true);
+        
+        if(!transactionNew.getConfirm()){
+            return;
+        }
+        
+        try{
+            Transaction t = transactionNew.getTransaction();
+            int id = transactionDAOImpl.getLastRecord() == null ? 1 : transactionDAOImpl.getLastRecord().getId() + 1;
+            t.setId(id);
+            
+            transactionDAOImpl.add(t);
+            loadTransactions();
+            JOptionPane.showMessageDialog(null, "Record was saved!", "System Information!", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage() + "!", "System Error!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_transactionsBtnNewActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -765,7 +913,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -790,6 +937,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTable transactionsTblTransactions;
     private javax.swing.JTextField transactionsTfSearch;
     private javax.swing.JButton usersBtnNew;
+    private javax.swing.JPopupMenu usersPopupMenu;
+    private javax.swing.JMenuItem usersPopupMenuEdit;
     private javax.swing.JTable usersTblUsers;
     private javax.swing.JTextField usersTfSearch;
     // End of variables declaration//GEN-END:variables
