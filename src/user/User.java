@@ -62,7 +62,7 @@ public class User implements Serializable {
     }
 
     public int getRole() {
-        return status;
+        return role;
     }
 
     public void setRole(int role) {

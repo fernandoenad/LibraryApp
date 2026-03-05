@@ -21,13 +21,29 @@ public class Main extends javax.swing.JFrame {
     MemberDAOImpl memberDAOImpl = new MemberDAOImpl("members.txt");
     UserDAOImpl userDAOImpl = new UserDAOImpl("users.txt");
     TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl("transactions.txt");
+    User loggedUser = null;
 
     /**
      * Creates new form Main
      */
     public Main() {
         initComponents();
-        loadTables();
+        loadApp();
+    }
+
+    public void loadApp(){
+        Splash splash = new Splash(this, true);
+        splash.setVisible(true);
+        this.setVisible(true);
+        Login login = new Login(this, true, this.userDAOImpl.viewAll());
+        login.setVisible(true);
+        
+        if(login.getLoggedOn() == true){
+            this.loggedUser = login.getUser();
+            JOptionPane.showMessageDialog(null, String.format("Hi, %s!", this.loggedUser.getUsername()), "System Greeting!", JOptionPane.INFORMATION_MESSAGE);
+            loadTables();
+        } 
+        
     }
 
     public void loadTables(){
@@ -188,8 +204,13 @@ public class Main extends javax.swing.JFrame {
 
         jMenuItem1.setText("jMenuItem1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Library Management System");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         javax.swing.GroupLayout tabHomeLayout = new javax.swing.GroupLayout(tabHome);
         tabHome.setLayout(tabHomeLayout);
@@ -855,22 +876,20 @@ public class Main extends javax.swing.JFrame {
         UserUpdate userUpdate = new UserUpdate(this, true, uo, this.memberDAOImpl);
         userUpdate.setVisible(true);
         
-        /*
-        if(!memberUpdate.getConfirm()){
+        if(!userUpdate.getConfirm()){
             return;
         }
         
-        
         try{
-            Member mu = memberUpdate.getMember();
+            User uu = userUpdate.getUser();
             
-            memberDAOImpl.updateById(id, mu);
-            loadMembers();
+            userDAOImpl.updateById(id, uu);
+            loadUsers();
             JOptionPane.showMessageDialog(null, "Record was updated!", "System Information!", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e){
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage() + "!", "System Error!", JOptionPane.WARNING_MESSAGE);
         }
-        */
+
     }//GEN-LAST:event_usersPopupMenuEditActionPerformed
 
     private void transactionsBtnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transactionsBtnNewActionPerformed
@@ -961,6 +980,17 @@ public class Main extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_transactionsPopupMenuEditActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        int option = JOptionPane.showConfirmDialog(null, "This will shutdown the application. Are you sure?", "System Confirmation!", JOptionPane.OK_CANCEL_OPTION);
+        
+        if(option != JOptionPane.OK_OPTION){
+            return;
+        } else {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

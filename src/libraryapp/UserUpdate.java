@@ -128,7 +128,7 @@ public class UserUpdate extends javax.swing.JDialog {
             }
         });
 
-        btnSave.setText("Save");
+        btnSave.setText("Update");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveActionPerformed(evt);
@@ -252,10 +252,7 @@ public class UserUpdate extends javax.swing.JDialog {
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
         // TODO add your handling code here:
-        cbMemberId.setSelectedIndex(0);
-        tfUsername.setText("");
-        tfPassword.setText("");
-        btngRole.clearSelection();
+        loadUser();
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -291,23 +288,33 @@ public class UserUpdate extends javax.swing.JDialog {
             errorMsg += "- Member Name must be selected.\n";
         } 
         
-        int role = 0;
+        if (btngRole.getSelection() == null) {
+            errorMsg += "- Please select a role.\n";
+        }
         
+        int role = 0;
         if(rbtnAdmin.isSelected()){
             role = 1;
         } 
         
-        if (btngRole.getSelection() == null) {
-            errorMsg += "- Please select a role.\n";
+        if (btngStatus.getSelection() == null) {
+            errorMsg += "- Please select a status.\n";
         }
-
+        
+        int status = 0;
+        if(rbtnActive.isSelected()){
+            status = 1;
+        } 
+        
         if (errorMsg.length() > 0) {
             JOptionPane.showMessageDialog(this, "Please correct the following errors:\n" + errorMsg.toString(), "Validation Error", JOptionPane.ERROR_MESSAGE);
             return; 
         }
         
+        System.out.println(role + "-" + status);
+        
         try {
-            this.user = new User(0, memberId, username, password, role, 1);
+            this.user = new User(this.user.getId(), memberId, username, password, role, status);
             this.confirmed = true;
             this.dispose();
         } catch (Exception e) {
